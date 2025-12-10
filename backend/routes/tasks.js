@@ -5,7 +5,7 @@ const Task = require('../models/Task');
 // GET all tasks
 router.get('/', async (req, res) => {
     try {
-        const tasks = await Task.find().sort({ createdAt: -1 });
+        const tasks = await Task.findAll({ order: [['createdAt', 'DESC']] });
         res.json(tasks);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -14,11 +14,9 @@ router.get('/', async (req, res) => {
 
 // POST create task
 router.post('/', async (req, res) => {
-    const { title, date, time } = req.body;
-    const task = new Task({ title, date, time });
-
     try {
-        const newTask = await task.save();
+        const { title, date, time } = req.body;
+        const newTask = await Task.create({ title, date, time });
         res.status(201).json(newTask);
     } catch (err) {
         res.status(400).json({ message: err.message });
@@ -28,16 +26,11 @@ router.post('/', async (req, res) => {
 // PUT update task
 router.put('/:id', async (req, res) => {
     try {
-        const task = await Task.findById(req.params.id);
+        const task = await Task.findByPk(req.params.id);
         if (!task) return res.status(404).json({ message: 'Task not found' });
 
-        if (req.body.title != null) task.title = req.body.title;
-        if (req.body.date != null) task.date = req.body.date;
-        if (req.body.time != null) task.time = req.body.time;
-        if (req.body.completed != null) task.completed = req.body.completed;
-
-        const updatedTask = await task.save();
-        res.json(updatedTask);
+        await task.update(req.body);
+        res.json(task);
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
@@ -46,10 +39,10 @@ router.put('/:id', async (req, res) => {
 // DELETE task
 router.delete('/:id', async (req, res) => {
     try {
-        const task = await Task.findById(req.params.id);
+        const task = await Task.findByPk(req.params.id);
         if (!task) return res.status(404).json({ message: 'Task not found' });
 
-        await task.deleteOne();
+        await task.destroy();
         res.json({ message: 'Task deleted' });
     } catch (err) {
         res.status(500).json({ message: err.message });
