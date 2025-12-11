@@ -1,0 +1,21 @@
+name: Deploy Staging
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker images
+        run: |
+          docker build -t frontend ./frontend
+          docker build -t backend ./backend
+
+      - name: Deploy to AWS (Simulated)
+        run: echo "Deploying to AWS Staging..."
