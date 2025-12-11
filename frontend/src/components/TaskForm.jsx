@@ -27,7 +27,7 @@ function TaskForm({ onTaskCreated, onTaskUpdated, editingTask, setEditingTask })
 
         try {
             if (editingTask) {
-                await fetch(`http://localhost:5000/api/tasks/${editingTask._id}`, {
+                await fetch(`http://localhost:5000/api/tasks/${editingTask.id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(taskData)

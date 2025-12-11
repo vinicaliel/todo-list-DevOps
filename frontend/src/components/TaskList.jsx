@@ -16,14 +16,14 @@ function TaskList({ tasks, onDelete, onEdit }) {
             {tasks.length === 0 ? <p>No tasks found.</p> : (
                 <ul>
                     {tasks.map(task => (
-                        <li key={task._id} className={`task-item ${task.completed ? 'completed' : ''}`}>
+                        <li key={task.id} className={`task-item ${task.completed ? 'completed' : ''}`}>
                             <div className="task-info">
                                 <h3>{task.title}</h3>
                                 <p>{task.date} at {task.time}</p>
                             </div>
                             <div className="task-actions">
                                 <button className="edit-btn" onClick={() => onEdit(task)}>Edit</button>
-                                <button className="delete-btn" onClick={() => handleDelete(task._id)}>Delete</button>
+                                <button className="delete-btn" onClick={() => handleDelete(task.id)}>Delete</button>
                             </div>
                         </li>
                     ))}
