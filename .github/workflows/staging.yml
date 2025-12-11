@@ -17,5 +17,15 @@ jobs:
           docker build -t frontend ./frontend
           docker build -t backend ./backend
 
-      - name: Deploy to AWS (Simulated)
-        run: echo "Deploying to AWS Staging..."
+      - name: Deploy to AWS via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ${{ secrets.AWS_USERNAME }}
+          key: ${{ secrets.AWS_SSH_KEY }}
+          script: |
+            cd todo-list-DevOps
+            git fetch --all
+            git checkout staging
+            git pull origin staging
+            docker compose up -d --build
