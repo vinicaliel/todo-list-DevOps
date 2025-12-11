@@ -62,6 +62,16 @@ services:
     depends_on:
       - zabbix-server
 
+  zabbix-agent:
+    image: zabbix/zabbix-agent:latest
+    ports:
+      - "10050:10050"
+    environment:
+      - ZBX_HOSTNAME=Zabbix server
+      - ZBX_SERVER_HOST=zabbix-server
+    depends_on:
+      - zabbix-server
+
   postgres-zabbix:
     image: postgres:13
     environment:
