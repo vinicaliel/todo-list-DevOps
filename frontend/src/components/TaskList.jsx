@@ -4,7 +4,11 @@ function TaskList({ tasks, onDelete, onEdit }) {
     const handleDelete = async (id) => {
         if (!window.confirm('Are you sure?')) return;
         try {
-            await fetch(`http://localhost:5000/api/tasks/${id}`, { method: 'DELETE' });
+            const API_URL = window.location.hostname === 'localhost'
+                ? 'http://localhost:5000'
+                : `http://${window.location.hostname}:5000`;
+
+            await fetch(`${API_URL}/api/tasks/${id}`, { method: 'DELETE' });
             onDelete();
         } catch (error) {
             console.error('Error deleting task:', error);

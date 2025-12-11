@@ -26,15 +26,19 @@ function TaskForm({ onTaskCreated, onTaskUpdated, editingTask, setEditingTask })
         const taskData = { title, date, time };
 
         try {
+            const API_URL = window.location.hostname === 'localhost'
+                ? 'http://localhost:5000'
+                : `http://${window.location.hostname}:5000`;
+
             if (editingTask) {
-                await fetch(`http://localhost:5000/api/tasks/${editingTask.id}`, {
+                await fetch(`${API_URL}/api/tasks/${editingTask.id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(taskData)
                 });
                 onTaskUpdated();
             } else {
-                await fetch('http://localhost:5000/api/tasks', {
+                await fetch(`${API_URL}/api/tasks`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(taskData)

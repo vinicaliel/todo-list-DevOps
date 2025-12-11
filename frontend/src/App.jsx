@@ -9,7 +9,12 @@ function App() {
 
     const fetchTasks = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/tasks');
+            // Dynamically determine API URL based on current hostname
+            const API_URL = window.location.hostname === 'localhost'
+                ? 'http://localhost:5000'
+                : `http://${window.location.hostname}:5000`;
+
+            const response = await fetch(`${API_URL}/api/tasks`);
             const data = await response.json();
             setTasks(data);
         } catch (error) {
