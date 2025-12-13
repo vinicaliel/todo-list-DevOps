@@ -41,3 +41,10 @@ Import `postman_collection.json` into Postman to test the API endpoints:
 - POST /api/tasks
 - PUT /api/tasks/:id
 - DELETE /api/tasks/:id
+
+  ##Group
+  - Ellen Virgínia Albuquerque da Silva - 01570521
+  - Nicolas Rafael Silva Lucena - 01565072
+  - Maisa Souza dos Santos - 01508744
+  - Eduardo Mendes Ferreira De Oliveira - 01504209
+  - Vinícius Caliel Nunes Passos - 01554544
